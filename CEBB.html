@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório Interativo - Colégio Estadual Barros Barreto - CEBB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Brilliant Blues -->
+    <!-- Application Structure Plan: A single-page dashboard design with a sticky top navigation for easy access to thematic sections: "Status", "Visão Geral", "Infraestrutura", "Comunidade", "Projetos", and "Contato". This structure was chosen to logically group disparate information (live time, administrative data, physical assets, community numbers, activities) into digestible, user-friendly modules. The flow encourages exploration either by scrolling or direct navigation, making it easy for parents, students, or community members to find specific information quickly without being overwhelmed. Key interactions include chart tooltips for data details and a filterable project list to engage the user. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Live Date/Time. Goal: Inform. Viz/Method: HTML card with live indicator. Interaction: Static display. Justification: Adds a dynamic, "current" feel to the static report data. Library: Tailwind CSS.
+        - Report Info: Core school data (founding year, INEP, location). Goal: Inform. Viz/Method: HTML info cards. Interaction: Static display. Justification: Provides immediate, scannable key facts. Library: Tailwind CSS.
+        - Report Info: Infrastructure quantities (classrooms, labs). Goal: Compare. Viz/Method: Horizontal Bar Chart. Interaction: Hover tooltips for exact numbers. Justification: Effectively compares the quantities of different physical assets. Library: Chart.js (Canvas).
+        - Report Info: School community numbers (students, staff). Goal: Show Proportions. Viz/Method: Donut Chart. Interaction: Hover tooltips. Justification: Clearly illustrates the composition of the school community. Library: Chart.js (Canvas).
+        - Report Info: List of educational projects. Goal: Organize/Explore. Viz/Method: Filterable list of HTML cards. Interaction: Clickable filter buttons to dynamically display relevant projects. Justification: Creates an engaging way to browse school activities by area of interest. Library: Vanilla JS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F0F9FF; /* Lightest Blue */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: #38BDF8; /* Lighter Blue accent on hover */
+        }
+        .project-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="text-gray-900">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-[#0F172A]">C.E. Barros Barreto</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#status" class="nav-link font-medium">Status</a>
+                <a href="#overview" class="nav-link font-medium">Visão Geral</a>
+                <a href="#infra" class="nav-link font-medium">Infraestrutura</a>
+                <a href="#community" class="nav-link font-medium">Comunidade</a>
+                <a href="#projects" class="nav-link font-medium">Projetos</a>
+                <a href="#contact" class="nav-link font-medium">Contato</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500">
+                <span class="text-2xl">☰</span>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white">
+            <a href="#status" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Status</a>
+            <a href="#overview" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Visão Geral</a>
+            <a href="#infra" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Infraestrutura</a>
+            <a href="#community" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Comunidade</a>
+            <a href="#projects" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Projetos</a>
+            <a href="#contact" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Contato</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <section id="status" class="mb-16 scroll-mt-24">
+            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#2563EB] flex flex-col md:flex-row justify-between items-center">
+                <div>
+                    <h2 class="font-bold text-xl mb-2 flex items-center">
+                        <span class="relative flex h-3 w-3 mr-3">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+                        </span>
+                        Status Atual do Relatório
+                    </h2>
+                    <p class="text-gray-600">Informações geradas e visualizadas na localização de Salvador, Bahia.</p>
+                </div>
+                <div class="text-center md:text-right mt-4 md:mt-0">
+                    <p class="text-2xl font-bold text-gray-800">17:48</p>
+                    <p class="text-sm text-gray-500">Segunda-feira, 22 de Setembro de 2025 (GMT-3)</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="overview" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-center mb-4 text-[#0F172A]">Colégio Estadual Barros Barreto</h2>
+            <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-10">
+                Uma instituição de ensino fundamental e médio dedicada ao desenvolvimento educacional e cidadão da comunidade de Paripe, em Salvador. Explore abaixo os dados e informações que compõem o nosso universo escolar.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#38BDF8]">
+                    <h3 class="font-bold text-lg mb-2">Ano de Fundação</h3>
+                    <p class="text-3xl font-bold text-gray-800">1980</p>
+                    <p class="text-sm text-gray-500 mt-2">Mais de 40 anos de história na educação.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#2563EB]">
+                    <h3 class="font-bold text-lg mb-2">Código INEP</h3>
+                    <p class="text-3xl font-bold text-gray-800">29333323</p>
+                    <p class="text-sm text-gray-500 mt-2">Identificação oficial no sistema de ensino.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#38BDF8]">
+                    <h3 class="font-bold text-lg mb-2">CNPJ</h3>
+                    <p class="text-xl font-bold text-gray-800">13.927.854/0001-31</p>
+                    <p class="text-sm text-gray-500 mt-2">Vinculado à Secretaria da Educação do Estado da Bahia.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#2563EB]">
+                    <h3 class="font-bold text-lg mb-2">Localização</h3>
+                    <p class="text-xl font-bold text-gray-800">Paripe, Salvador-BA</p>
+                    <p class="text-sm text-gray-500 mt-2">Atendendo à comunidade do subúrbio ferroviário.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="infra" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-center mb-4 text-[#0F172A]">Infraestrutura e Recursos</h2>
+            <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-10">
+                O colégio dispõe de uma variedade de espaços pensados para apoiar o aprendizado e o bem-estar dos alunos. O gráfico abaixo detalha os principais recursos físicos disponíveis na instituição.
+            </p>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <div class="chart-container">
+                    <canvas id="infraChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="community" class="mb-16 scroll-mt-24">
+             <h2 class="text-3xl font-bold text-center mb-4 text-[#0F172A]">Nossa Comunidade Escolar</h2>
+            <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-10">
+                A força do Colégio Barros Barreto reside nas pessoas que o compõem. Conheça os números que representam nossos alunos, professores e equipe de apoio, que trabalham juntos diariamente.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                <div class="md:col-span-1 bg-white p-6 rounded-lg shadow-lg">
+                     <div class="chart-container h-64 md:h-80">
+                        <canvas id="communityChart"></canvas>
+                    </div>
+                </div>
+                <div class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                         <h3 class="font-semibold text-gray-600 mb-1">Total de Alunos</h3>
+                         <p class="text-4xl font-bold text-[#2563EB]">~850</p>
+                         <p class="text-sm text-gray-500 mt-1">Ensino Fundamental e Médio</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                         <h3 class="font-semibold text-gray-600 mb-1">Total de Professores</h3>
+                         <p class="text-4xl font-bold text-[#38BDF8]">~45</p>
+                         <p class="text-sm text-gray-500 mt-1">Educadores qualificados</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md text-center col-span-1 sm:col-span-2">
+                         <h3 class="font-semibold text-gray-600 mb-1">Equipe de Apoio</h3>
+                         <p class="text-4xl font-bold text-[#0F172A]">~15</p>
+                         <p class="text-sm text-gray-500 mt-1">Administrativo, limpeza e alimentação</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-center mb-4 text-[#0F172A]">Projetos e Iniciativas</h2>
+            <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-10">
+                Acreditamos em uma educação que vai além da sala de aula. Nossos projetos buscam engajar os alunos em diversas áreas do conhecimento, promovendo a criatividade, o pensamento crítico e a colaboração.
+            </p>
+            <div class="flex justify-center space-x-2 md:space-x-4 mb-8">
+                <button class="filter-btn bg-[#2563EB] text-white px-4 py-2 rounded-full font-medium" data-filter="all">Todos</button>
+                <button class="filter-btn bg-white text-gray-700 px-4 py-2 rounded-full font-medium border" data-filter="ciencias">Ciências</button>
+                <button class="filter-btn bg-white text-gray-700 px-4 py-2 rounded-full font-medium border" data-filter="cultura">Cultura</button>
+                <button class="filter-btn bg-white text-gray-700 px-4 py-2 rounded-full font-medium border" data-filter="esportes">Esportes</button>
+            </div>
+            <div id="project-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden" data-category="ciencias">
+                    <div class="p-6">
+                        <span class="text-sm font-semibold text-[#2563EB]">Ciências</span>
+                        <h3 class="font-bold text-xl my-2">Feira de Ciências e Tecnologias</h3>
+                        <p class="text-gray-600 text-sm">Participação anual na FECIBA, incentivando a pesquisa e a inovação científica entre os estudantes através de projetos práticos e experimentais.</p>
+                    </div>
+                </div>
+                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden" data-category="cultura">
+                    <div class="p-6">
+                        <span class="text-sm font-semibold text-[#38BDF8]">Cultura</span>
+                        <h3 class="font-bold text-xl my-2">Sarau de Poesia</h3>
+                        <p class="text-gray-600 text-sm">Evento que promove a leitura, a escrita criativa e a expressão artística, valorizando a literatura e os talentos dos nossos alunos.</p>
+                    </div>
+                </div>
+                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden" data-category="esportes">
+                    <div class="p-6">
+                        <span class="text-sm font-semibold text-[#0F172A]">Esportes</span>
+                        <h3 class="font-bold text-xl my-2">Jogos Interclasses</h3>
+                        <p class="text-gray-600 text-sm">Competição esportiva que estimula o trabalho em equipe, o respeito e a integração entre as turmas em diversas modalidades.</p>
+                    </div>
+                </div>
+                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden" data-category="ciencias">
+                    <div class="p-6">
+                        <span class="text-sm font-semibold text-[#2563EB]">Ciências</span>
+                        <h3 class="font-bold text-xl my-2">Olimpíada de Matemática</h3>
+                        <p class="text-gray-600 text-sm">Preparação e participação na OBMEP, desafiando os alunos a resolverem problemas complexos e a desenvolverem o raciocínio lógico.</p>
+                    </div>
+                </div>
+                <div class="project-card bg-white rounded-lg shadow-md overflow-hidden" data-category="cultura">
+                     <div class="p-6">
+                        <span class="text-sm font-semibold text-[#38BDF8]">Cultura</span>
+                        <h3 class="font-bold text-xl my-2">Projeto Consciência Negra</h3>
+                        <p class="text-gray-600 text-sm">Atividades, palestras e apresentações durante o mês de novembro para celebrar e refletir sobre a cultura e história afro-brasileira.</p>
+                    </div>
+                </div>
+                 <div class="project-card bg-white rounded-lg shadow-md overflow-hidden" data-category="esportes">
+                    <div class="p-6">
+                        <span class="text-sm font-semibold text-[#0F172A]">Esportes</span>
+                        <h3 class="font-bold text-xl my-2">Festival de Dança</h3>
+                        <p class="text-gray-600 text-sm">Apresentações de diversos estilos de dança, promovendo a expressão corporal, a cultura e a integração entre os estudantes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="scroll-mt-24 bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-3xl font-bold text-center mb-6 text-[#0F172A]">Contato e Redes Sociais</h2>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-8 text-center">
+                 <div class="flex-1">
+                    <h3 class="font-bold text-lg mb-2">Endereço</h3>
+                    <p class="text-gray-600">Rua Doutor Eduardo Dotto, S/N</p>
+                    <p class="text-gray-600">Paripe, Salvador - BA, 40820-050</p>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-lg mb-2">Redes Sociais</h3>
+                    <p class="text-gray-600">Acompanhe nossas atividades:</p>
+                    <a href="#" class="text-[#2563EB] hover:underline">Instagram: @cebarrosbarreto</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#0F172A] text-white mt-16">
+        <div class="container mx-auto px-6 py-4 text-center">
+            <p>&copy; 2025 Colégio Estadual Barros Barreto. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            const infraCtx = document.getElementById('infraChart').getContext('2d');
+            new Chart(infraCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Salas de Aula', 'Biblioteca', ['Laboratório de', 'Informática'], ['Laboratório de', 'Ciências'], ['Quadra de', 'Esportes'], 'Cozinha'],
+                    datasets: [{
+                        label: 'Quantidade',
+                        data: [15, 1, 1, 1, 1, 1],
+                        backgroundColor: [
+                            'rgba(37, 99, 235, 0.7)',
+                            'rgba(56, 189, 248, 0.7)',
+                            'rgba(37, 99, 235, 0.7)',
+                            'rgba(56, 189, 248, 0.7)',
+                            'rgba(37, 99, 235, 0.7)',
+                            'rgba(56, 189, 248, 0.7)'
+                        ],
+                        borderColor: [
+                            '#2563EB',
+                            '#38BDF8',
+                            '#2563EB',
+                            '#38BDF8',
+                            '#2563EB',
+                            '#38BDF8'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                             callbacks: {
+                                title: function(tooltipItems) {
+                                    const item = tooltipItems[0];
+                                    let label = item.chart.data.labels[item.dataIndex];
+                                    if (Array.isArray(label)) {
+                                      return label.join(' ');
+                                    } else {
+                                      return label;
+                                    }
+                                },
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.x !== null) {
+                                        label += context.parsed.x;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(200, 200, 200, 0.2)'
+                            }
+                        },
+                        y: {
+                             grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            const communityCtx = document.getElementById('communityChart').getContext('2d');
+            new Chart(communityCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Alunos', 'Professores', 'Equipe de Apoio'],
+                    datasets: [{
+                        label: 'Membros da Comunidade',
+                        data: [850, 45, 15],
+                        backgroundColor: [
+                            '#2563EB',
+                            '#38BDF8',
+                            '#0F172A'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Composição da Comunidade'
+                        }
+                    }
+                }
+            });
+
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const projectCards = document.querySelectorAll('.project-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    filterButtons.forEach(btn => {
+                         btn.classList.remove('bg-[#2563EB]', 'text-white');
+                         btn.classList.add('bg-white', 'text-gray-700');
+                    });
+                    button.classList.add('bg-[#2563EB]', 'text-white');
+                    button.classList.remove('bg-white', 'text-gray-700');
+
+                    const filter = button.dataset.filter;
+
+                    projectCards.forEach(card => {
+                        if (filter === 'all' || card.dataset.category === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
