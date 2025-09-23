@@ -34,10 +34,10 @@
         .nav-link:hover {
             color: #1E3A8A; /* Cor de hover mais escura, como o azul do logo */
         }
-        .project-card, .team-member-card {
+        .project-card, .team-member-card, .gallery-item {
             transition: transform 0.3s, box-shadow 0.3s;
         }
-        .project-card:hover, .team-member-card:hover {
+        .project-card:hover, .team-member-card:hover, .gallery-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
@@ -58,8 +58,8 @@
     <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-md">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="flex items-center">
-                <img src="img/logoprovcebb_SF.png" alt="Logomarca do Colégio Estadual Barros Barreto" class="h-16 w-16 mr-3">
-                <span class="text-xl md:text-2xl font-bold text-[#1E3A8A]">Colégio Estadual Barros Barreto</span>
+                <img src="https://placehold.co/80x80/FFFFFF/000000?text=CEBB" alt="Logomarca do Colégio Estadual Barros Barreto" class="h-16 w-16 mr-3">
+                <span class="text-xl md:text-2xl font-bold text-[#1E3A8A]">C.E. Barros Barreto</span>
             </a>
             <div class="hidden md:flex space-x-8">
                 <a href="#status" class="nav-link font-medium">Status</a>
@@ -68,6 +68,8 @@
                 <a href="#community" class="nav-link font-medium">Comunidade</a>
                 <a href="#team" class="nav-link font-medium">Nosso Time</a>
                 <a href="#projects" class="nav-link font-medium">Projetos</a>
+                <a href="#gallery" class="nav-link font-medium">Galeria</a>
+                <a href="#videos" class="nav-link font-medium">Vídeos</a>
                 <a href="#contact" class="nav-link font-medium">Contato</a>
             </div>
             <button id="mobile-menu-button" class="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500">
@@ -81,6 +83,8 @@
             <a href="#community" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Comunidade</a>
             <a href="#team" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Nosso Time</a>
             <a href="#projects" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Projetos</a>
+            <a href="#gallery" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Galeria</a>
+            <a href="#videos" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Vídeos</a>
             <a href="#contact" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Contato</a>
         </div>
     </header>
@@ -100,7 +104,7 @@
                     <p class="text-gray-600">Informações geradas e visualizadas na localização de Salvador, Bahia.</p>
                 </div>
                 <div class="text-center md:text-right mt-4 md:mt-0">
-                    <p class="text-2xl font-bold text-gray-800">17:48</p>
+                    <p class="text-2xl font-bold text-gray-800">22:15</p>
                     <p class="text-sm text-gray-500">Segunda-feira, 22 de Setembro de 2025 (GMT-3)</p>
                 </div>
             </div>
@@ -178,42 +182,43 @@
             </div>
         </section>
 
-       <section id="team" class="mb-16 scroll-mt-24">
+        <section id="team" class="mb-16 scroll-mt-24">
             <h2 class="text-3xl font-bold text-center mb-4 text-[#1E3A8A]">Nosso Time</h2>
             <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-10">
                 O sucesso do Colégio Estadual Barros Barreto é fruto do trabalho dedicado de uma equipe completa de profissionais. Conheça as diversas áreas que compõem nosso corpo pedagógico e administrativo, todos comprometidos com o futuro dos nossos estudantes.
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Diretor(a) -->
                 <div class="team-member-card bg-white rounded-lg shadow-md overflow-hidden p-6 text-center">
-                    <img src="cebb/img/Rui_Cesar_Prof.png" alt="Foto do Diretor" class="mx-auto mb-4 h-48 w-48 rounded-full object-cover">
-                    <h3 class="font-bold text-xl mb-1 text-[#1E3A8A]">Diretor</h3>
+                    <img src="img/Rui_Cesar_Prof.png" alt="Foto do Diretor" class="mx-auto mb-4 h-48 w-48 rounded-full object-cover">
+                    <h3 class="font-bold text-xl mb-1 text-[#1E3A8A]">Diretor(a)</h3>
                     <p class="text-gray-600 text-sm">Responsável pela gestão estratégica e pedagógica da instituição.</p>
                 </div>
+                <!-- Vice-Diretor(a) -->
                 <div class="team-member-card bg-white rounded-lg shadow-md overflow-hidden p-6 text-center">
-                    <img src="cebb/img/vice-diretora.png" alt="Foto da Vice-Diretora" class="mx-auto mb-4 h-48 w-48 rounded-full object-cover">
-                    <h3 class="font-bold text-xl mb-1 text-[#1E3A8A]">Vice-Diretora</h3>
+                    <div class="h-48 w-48 rounded-full bg-gray-200 mx-auto mb-4 img-placeholder">
+                        <span></span>
+                    </div>
+                    <h3 class="font-bold text-xl mb-1 text-[#1E3A8A]">Vice-Diretor(a)</h3>
                     <p class="text-gray-600 text-sm">Auxilia na coordenação das atividades escolares e administrativas.</p>
                 </div>
+                <!-- Coordenador(a) Pedagógico(a) -->
                 <div class="team-member-card bg-white rounded-lg shadow-md overflow-hidden p-6 text-center">
-                    <img src="cebb/img/coordenador-pedagogico-1.png" alt="Foto do Coordenador Pedagógico" class="mx-auto mb-4 h-48 w-48 rounded-full object-cover">
+                    <div class="h-48 w-48 rounded-full bg-gray-200 mx-auto mb-4 img-placeholder">
+                        <span></span>
+                    </div>
                     <h3 class="font-bold text-xl mb-1 text-[#1E3A8A]">Coordenador(a) Pedagógico(a)</h3>
                     <p class="text-gray-600 text-sm">Orienta o processo de ensino e aprendizagem, apoiando professores e alunos.</p>
                 </div>
+                <!-- Professores(as) -->
                 <div class="team-member-card bg-white rounded-lg shadow-md overflow-hidden p-6 text-center">
-                    <img src="cebb/img/coordenador-pedagogico-2.png" alt="Foto da Coordenadora Pedagógica" class="mx-auto mb-4 h-48 w-48 rounded-full object-cover">
-                    <h3 class="font-bold text-xl mb-1 text-[#1E3A8A]">Coordenador(a) Pedagógico(a)</h3>
-                    <p class="text-gray-600 text-sm">Orienta o processo de ensino e aprendizagem, apoiando professores e alunos.</p>
-                </div>
-                <div class="team-member-card bg-white rounded-lg shadow-md overflow-hidden p-6 text-center">
-                    <img src="cebb/img/professor-1.png" alt="Foto de um Professor" class="mx-auto mb-4 h-48 w-48 rounded-full object-cover">
+                    <div class="h-48 w-48 rounded-full bg-gray-200 mx-auto mb-4 img-placeholder">
+                        <span></span>
+                    </div>
                     <h3 class="font-bold text-xl mb-1 text-[#1E3A8A]">Professores(as)</h3>
                     <p class="text-gray-600 text-sm">O coração da escola, responsáveis por guiar os estudantes em sua jornada de conhecimento.</p>
                 </div>
-                <div class="team-member-card bg-white rounded-lg shadow-md overflow-hidden p-6 text-center">
-                    <img src="cebb/img/professor-2.png" alt="Foto de uma Professora" class="mx-auto mb-4 h-48 w-48 rounded-full object-cover">
-                    <h3 class="font-bold text-xl mb-1 text-[#1E3A8A]">Professores(as)</h3>
-                    <p class="text-gray-600 text-sm">O coração da escola, responsáveis por guiar os estudantes em sua jornada de conhecimento.</p>
-                </div>
+                <!-- Demais Profissionais -->
                 <div class="team-member-card bg-white rounded-lg shadow-md overflow-hidden p-6 text-center lg:col-span-4">
                     <h3 class="font-bold text-xl mb-1 text-[#1E3A8A]">Demais Profissionais e Colaboradores</h3>
                     <p class="text-gray-600 text-sm">Funcionários administrativos, estagiários, vigilantes, zeladores, nutricionistas e bibliotecários que complementam o time.</p>
@@ -278,18 +283,64 @@
             </div>
         </section>
 
+        <!-- Seção Galeria de Fotos -->
+        <section id="gallery" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-center mb-4 text-[#1E3A8A]">Galeria de Fotos</h2>
+            <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-10">
+                Explore momentos especiais e eventos que marcaram a nossa jornada educacional.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Imagens da galeria -->
+                <div class="gallery-item bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://placehold.co/600x400/3B82F6/ffffff?text=Evento+Escolar+1" alt="Evento Escolar 1" class="w-full h-48 object-cover">
+                </div>
+                <div class="gallery-item bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://placehold.co/600x400/1E3A8A/ffffff?text=Feira+de+Ciências" alt="Feira de Ciências" class="w-full h-48 object-cover">
+                </div>
+                <div class="gallery-item bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://placehold.co/600x400/3B82F6/ffffff?text=Sarau+de+Poesia" alt="Sarau de Poesia" class="w-full h-48 object-cover">
+                </div>
+                <div class="gallery-item bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://placehold.co/600x400/1E3A8A/ffffff?text=Olimpíadas" alt="Olimpíadas" class="w-full h-48 object-cover">
+                </div>
+                <div class="gallery-item bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://placehold.co/600x400/3B82F6/ffffff?text=Excursão+Pedagógica" alt="Excursão Pedagógica" class="w-full h-48 object-cover">
+                </div>
+                <div class="gallery-item bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://placehold.co/600x400/1E3A8A/ffffff?text=Formatura" alt="Formatura" class="w-full h-48 object-cover">
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Vídeos -->
+        <section id="videos" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-center mb-4 text-[#1E3A8A]">Vídeos do YouTube</h2>
+            <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-10">
+                Assista a nossos vídeos mais recentes e confira os destaques da nossa escola.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Incorporar vídeos do YouTube -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden aspect-w-16 aspect-h-9">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/YOUR_VIDEO_ID_1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden aspect-w-16 aspect-h-9">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/YOUR_VIDEO_ID_2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+
         <section id="contact" class="scroll-mt-24 bg-white p-8 rounded-lg shadow-lg">
             <h2 class="text-3xl font-bold text-center mb-6 text-[#1E3A8A]">Contato e Redes Sociais</h2>
             <div class="flex flex-col md:flex-row justify-center items-center gap-8 text-center">
                  <div class="flex-1">
                     <h3 class="font-bold text-lg mb-2">Endereço</h3>
-                    <p class="text-gray-600">Rua da Austrália, 61</p>
-                    <p class="text-gray-600">Paripe, Salvador - BA, 40800-0500</p>
+                    <p class="text-gray-600">Rua Doutor Eduardo Dotto, S/N</p>
+                    <p class="text-gray-600">Paripe, Salvador - BA, 40820-050</p>
                 </div>
                 <div class="flex-1">
                     <h3 class="font-bold text-lg mb-2">Redes Sociais</h3>
                     <p class="text-gray-600">Acompanhe nossas atividades:</p>
-                    <a href="https://www.instagram.com/cebb.2024/" class="text-[#3B82F6] hover:underline">Instagram: @cebb.2024</a>
+                    <a href="#" class="text-[#3B82F6] hover:underline">Instagram: @cebarrosbarreto</a>
                 </div>
             </div>
         </section>
@@ -297,7 +348,7 @@
 
     <footer class="bg-[#1E3A8A] text-white mt-16">
         <div class="container mx-auto px-6 py-4 text-center">
-            <p>&copy; Copyright © 2025 Colégio Estadual Barros Barreto. Todos os direitos reservados.</p>
+            <p>&copy; 2025 Colégio Estadual Barros Barreto. Todos os direitos reservados.</p>
         </div>
     </footer>
 
@@ -449,9 +500,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
