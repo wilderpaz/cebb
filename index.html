@@ -383,6 +383,9 @@
                 });
             });
 
+            // Paleta de cores baseada no logo
+            const palette = ['#1E3A8A', '#3B82F6', '#60A5FA', '#93C5FD', '#BFDBFE', '#D6E6F2'];
+
             const infraCtx = document.getElementById('infraChart').getContext('2d');
             new Chart(infraCtx, {
                 type: 'doughnut',
@@ -391,22 +394,8 @@
                     datasets: [{
                         label: 'Quantidade',
                         data: [15, 1, 1, 1, 1, 1],
-                        backgroundColor: [
-                            'rgba(30, 58, 138, 0.7)',
-                            'rgba(59, 130, 246, 0.7)',
-                            'rgba(30, 58, 138, 0.7)',
-                            'rgba(59, 130, 246, 0.7)',
-                            'rgba(30, 58, 138, 0.7)',
-                            'rgba(59, 130, 246, 0.7)'
-                        ],
-                        borderColor: [
-                            '#1E3A8A',
-                            '#3B82F6',
-                            '#1E3A8A',
-                            '#3B82F6',
-                            '#1E3A8A',
-                            '#3B82F6'
-                        ],
+                        backgroundColor: palette,
+                        borderColor: palette,
                         borderWidth: 1
                     }]
                 },
@@ -448,11 +437,7 @@
                     datasets: [{
                         label: 'Membros da Comunidade',
                         data: [850, 45, 20],
-                        backgroundColor: [
-                            '#1E3A8A',
-                            '#3B82F6',
-                            '#0F172A'
-                        ],
+                        backgroundColor: [palette[0], palette[1], palette[2]],
                         hoverOffset: 4
                     }]
                 },
