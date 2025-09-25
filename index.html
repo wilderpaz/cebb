@@ -67,6 +67,103 @@
             width: 100%;
             height: 100%;
         }
+
+        /* Estilos da Linha do Tempo */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: #3B82F6;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        .timeline-container {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -17px;
+            background-color: white;
+            border: 4px solid #1E3A8A;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .left {
+            left: 0;
+        }
+        .right {
+            left: 50%;
+        }
+        .left::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            right: 30px;
+            border: medium solid white;
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent white;
+        }
+        .right::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            left: 30px;
+            border: medium solid white;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent white transparent transparent;
+        }
+        .right::after {
+            left: -16px;
+        }
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: white;
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        @media screen and (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+            .timeline-container {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            .timeline-container::before {
+                left: 60px;
+                border: medium solid white;
+                border-width: 10px 10px 10px 0;
+                border-color: transparent white transparent transparent;
+            }
+            .left::after, .right::after {
+                left: 15px;
+            }
+            .right {
+                left: 0%;
+            }
+        }
     </style>
 </head>
 <body class="text-gray-900">
@@ -78,6 +175,7 @@
                 <span class="text-xl md:text-2xl font-bold text-[#1E3A8A]">C.E. Barros Barreto</span>
             </a>
             <div class="hidden md:flex space-x-8">
+                <a href="#hero" class="nav-link font-medium">Início</a>
                 <a href="#status" class="nav-link font-medium">Status</a>
                 <a href="#overview" class="nav-link font-medium">Visão Geral</a>
                 <a href="#infra" class="nav-link font-medium">Infraestrutura</a>
@@ -86,6 +184,7 @@
                 <a href="#projects" class="nav-link font-medium">Projetos</a>
                 <a href="#gallery" class="nav-link font-medium">Galeria</a>
                 <a href="#videos" class="nav-link font-medium">Vídeos</a>
+                <a href="#testimonials" class="nav-link font-medium">Depoimentos</a>
                 <a href="#contact" class="nav-link font-medium">Contato</a>
             </div>
             <button id="mobile-menu-button" class="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500">
@@ -93,6 +192,7 @@
             </button>
         </nav>
         <div id="mobile-menu" class="hidden md:hidden bg-white">
+            <a href="#hero" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Início</a>
             <a href="#status" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Status</a>
             <a href="#overview" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Visão Geral</a>
             <a href="#infra" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Infraestrutura</a>
@@ -101,12 +201,24 @@
             <a href="#projects" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Projetos</a>
             <a href="#gallery" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Galeria</a>
             <a href="#videos" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Vídeos</a>
+            <a href="#testimonials" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Depoimentos</a>
             <a href="#contact" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Contato</a>
         </div>
     </header>
 
     <main class="container mx-auto px-6 py-12">
 
+        <!-- Seção Hero - Nova -->
+        <section id="hero" class="mb-16 text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-[#1E3A8A] leading-tight mb-4">
+                Relatório Anual
+                <span class="block text-[#3B82F6] text-3xl md:text-5xl mt-2">Colégio Barros Barreto</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto mb-8">
+                Transparência e Inovação na Gestão Escolar. Explore o nosso desempenho, projetos e a nossa vibrante comunidade escolar de forma interativa.
+            </p>
+        </section>
+        
         <section id="status" class="mb-16 scroll-mt-24">
             <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#1E3A8A] flex flex-col md:flex-row justify-between items-center">
                 <div>
@@ -120,17 +232,49 @@
                     <p class="text-gray-600">Informações geradas e visualizadas na localização de Salvador, Bahia.</p>
                 </div>
                 <div class="text-center md:text-right mt-4 md:mt-0">
-                    <p class="text-2xl font-bold text-gray-800">13:04</p>
-                    <p class="text-sm text-gray-500">Quarta-feira, 24 de Setembro de 2025 (GMT-3)</p>
+                    <p id="current-time" class="text-2xl font-bold text-gray-800">--:--</p>
+                    <p id="current-date" class="text-sm text-gray-500">-- de -- de ----</p>
                 </div>
             </div>
         </section>
 
         <section id="overview" class="mb-16 scroll-mt-24">
-            <h2 class="text-3xl font-bold text-center mb-4 text-[#1E3A8A]">Colégio Estadual Barros Barreto</h2>
+            <h2 class="text-3xl font-bold text-center mb-4 text-[#1E3A8A]">Visão Geral da Instituição</h2>
             <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-10">
                 Uma instituição de ensino fundamental e médio dedicada ao desenvolvimento educacional e cidadão da comunidade de Paripe, em Salvador. Explore abaixo os dados e informações que compõem o nosso universo escolar.
             </p>
+            
+            <!-- Nova seção de linha do tempo -->
+            <div id="history" class="mb-16 scroll-mt-24">
+                <h3 class="text-2xl font-bold text-center mb-6 text-[#1E3A8A]">Nossa História em Dados</h3>
+                <div class="timeline">
+                    <div class="timeline-container left">
+                        <div class="timeline-content">
+                            <h4 class="font-bold text-lg mb-1">1950 - Fundação</h4>
+                            <p class="text-sm text-gray-600">O Colégio Estadual Barros Barreto é fundado, iniciando sua missão de oferecer educação de qualidade para a comunidade local.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-container right">
+                        <div class="timeline-content">
+                            <h4 class="font-bold text-lg mb-1">1980 - Expansão</h4>
+                            <p class="text-sm text-gray-600">Com o crescimento da demanda, novas salas de aula e instalações são construídas para acomodar mais estudantes.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-container left">
+                        <div class="timeline-content">
+                            <h4 class="font-bold text-lg mb-1">2005 - Modernização Tecnológica</h4>
+                            <p class="text-sm text-gray-600">Inauguração do primeiro laboratório de informática, marcando o início da era tecnológica na escola.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-container right">
+                        <div class="timeline-content">
+                            <h4 class="font-bold text-lg mb-1">2020 - Projetos de Inovação</h4>
+                            <p class="text-sm text-gray-600">A escola lança novos projetos pedagógicos focados em tecnologia e sustentabilidade, preparando os alunos para o futuro.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#3B82F6]">
                     <h3 class="font-bold text-lg mb-2">Ano de Fundação</h3>
@@ -345,9 +489,53 @@
             </div>
         </section>
 
+        <!-- Seção de Depoimentos - Nova -->
+        <section id="testimonials" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-center mb-4 text-[#1E3A8A]">O Que Eles Dizem Sobre Nós</h2>
+            <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-10">
+                A voz da nossa comunidade é o nosso maior orgulho. Leia os depoimentos de alunos e pais que fazem parte da nossa história.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <p class="text-gray-700 italic mb-4">"O Barros Barreto me proporcionou as ferramentas e o apoio de que eu precisava para crescer academicamente. A equipe é maravilhosa!"</p>
+                    <p class="font-bold text-[#1E3A8A]">- Maria, Ex-aluna</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <p class="text-gray-700 italic mb-4">"A escola não se preocupa apenas com o ensino, mas com a formação de cidadãos. Isso faz toda a diferença para o futuro do meu filho."</p>
+                    <p class="font-bold text-[#1E3A8A]">- João Silva, Pai de Aluno</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <p class="text-gray-700 italic mb-4">"O ambiente colaborativo e os projetos inovadores me motivam todos os dias a ir além dos estudos."</p>
+                    <p class="font-bold text-[#1E3A8A]">- Ana Paula, Aluna</p>
+                </div>
+            </div>
+        </section>
+
         <section id="contact" class="scroll-mt-24 bg-white p-8 rounded-lg shadow-lg">
-            <h2 class="text-3xl font-bold text-center mb-6 text-[#1E3A8A]">Contato e Redes Sociais</h2>
-            <div class="flex flex-col md:flex-row justify-center items-center gap-8 text-center">
+            <h2 class="text-3xl font-bold text-center mb-6 text-[#1E3A8A]">Fale Conosco</h2>
+            <p class="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-10">
+                Se você tem alguma dúvida ou sugestão, preencha o formulário abaixo.
+            </p>
+            
+            <form id="contact-form" class="max-w-xl mx-auto space-y-4">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+                    <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#3B82F6] focus:border-[#3B82F6]" required>
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#3B82F6] focus:border-[#3B82F6]" required>
+                </div>
+                <div>
+                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Mensagem</label>
+                    <textarea id="message" name="message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#3B82F6] focus:border-[#3B82F6]" required></textarea>
+                </div>
+                <button type="submit" class="w-full bg-[#1E3A8A] text-white py-2 px-4 rounded-lg font-bold hover:bg-[#3B82F6] transition-colors duration-300">
+                    Enviar Mensagem
+                </button>
+            </form>
+            
+            <div class="flex flex-col md:flex-row justify-center items-center gap-8 text-center mt-12">
                  <div class="flex-1">
                     <h3 class="font-bold text-lg mb-2">Endereço</h3>
                     <p class="text-gray-600">Rua da Austrália, 61</p>
@@ -382,6 +570,22 @@
                     mobileMenu.classList.add('hidden');
                 });
             });
+
+            // Função para formatar a data e hora
+            function updateDateTime() {
+                const now = new Date();
+                const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false };
+                const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+                const timeString = now.toLocaleTimeString('pt-BR', timeOptions);
+                const dateString = now.toLocaleDateString('pt-BR', dateOptions);
+
+                document.getElementById('current-time').textContent = timeString;
+                document.getElementById('current-date').textContent = dateString + ' (GMT-3)';
+            }
+            // Atualiza a cada minuto
+            updateDateTime();
+            setInterval(updateDateTime, 60000);
 
             // Paleta de cores baseada no logo
             const palette = ['#1E3A8A', '#3B82F6', '#60A5FA', '#93C5FD', '#BFDBFE', '#D6E6F2'];
@@ -478,6 +682,24 @@
                         }
                     });
                 });
+            });
+
+            // Lógica para o formulário de contato
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Impede o envio padrão do formulário
+
+                // Dados do formulário
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+
+                // Constrói o link mailto
+                const mailtoLink = `mailto:contato@colegiobarrosbarreto.com?subject=Mensagem de ${name}&body=${encodeURIComponent(message)}%0A%0A%0A---%0A${encodeURIComponent('Email: ' + email)}`;
+                
+                // Abre o cliente de e-mail do usuário
+                window.location.href = mailtoLink;
+                
             });
         });
     </script>
