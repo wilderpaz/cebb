@@ -174,30 +174,29 @@
                 <img src="img/logoprovcebb_SF.png" alt="Logomarca do Colégio Estadual Barros Barreto" class="h-16 w-16 mr-3">
                 <span class="text-xl md:text-2xl font-bold text-[#1E3A8A]">C.E. Barros Barreto</span>
             </a>
-            <div class="hidden md:flex space-x-8">
-                <a href="#hero" class="nav-link font-medium">Início</a>
-                <a href="#status" class="nav-link font-medium">Status</a>
-                <a href="#overview" class="nav-link font-medium">Visão Geral</a>
-                <a href="#infra" class="nav-link font-medium">Infraestrutura</a>
-                <a href="dashboard.html" class="nav-link font-medium">Dashboard</a>
-                <a href="#community" class="nav-link font-medium">Comunidade</a>
-                <a href="#team" class="nav-link font-medium">Nosso Time</a>
-                <a href="#projects" class="nav-link font-medium">Projetos</a>
-                <a href="#gallery" class="nav-link font-medium">Galeria</a>
-                <a href="#videos" class="nav-link font-medium">Vídeos</a>
-                <a href="#testimonials" class="nav-link font-medium">Depoimentos</a>
-                <a href="#contact" class="nav-link font-medium">Contato</a>
+            <!-- MENU PRINCIPAL: Otimizado para telas maiores -->
+            <div class="hidden md:flex space-x-4 items-center"> 
+                <a href="#hero" class="nav-link text-sm font-semibold">Início</a>
+                <a href="#status" class="nav-link text-sm font-semibold">Status</a>
+                <a href="#overview" class="nav-link text-sm font-semibold">Visão Geral</a>
+                <a href="#infra" class="nav-link text-sm font-semibold">Infraestrutura</a>
+                <a href="#community" class="nav-link text-sm font-semibold">Comunidade</a>
+                <a href="#team" class="nav-link text-sm font-semibold">Nosso Time</a>
+                <a href="#projects" class="nav-link text-sm font-semibold">Projetos</a>
+                <a href="#gallery" class="nav-link text-sm font-semibold">Mídia</a> <!-- Agrupado Galeria e Vídeos -->
+                <a href="#testimonials" class="nav-link text-sm font-semibold">Depoimentos</a>
+                <a href="#contact" class="nav-link text-sm font-semibold">Contato</a>
             </div>
             <button id="mobile-menu-button" class="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500">
                 <span class="text-2xl">☰</span>
             </button>
         </nav>
+        <!-- MENU MOBILE -->
         <div id="mobile-menu" class="hidden md:hidden bg-white">
             <a href="#hero" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Início</a>
             <a href="#status" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Status</a>
             <a href="#overview" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Visão Geral</a>
             <a href="#infra" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Infraestrutura</a>
-            <a href="dashboard.html" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Dashboard</a>
             <a href="#community" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Comunidade</a>
             <a href="#team" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Nosso Time</a>
             <a href="#projects" class="block text-center py-2 px-4 text-sm hover:bg-gray-100">Projetos</a>
@@ -246,7 +245,7 @@
                 Uma instituição de ensino fundamental e médio dedicada ao desenvolvimento educacional e cidadão da comunidade de Paripe, em Salvador. Explore abaixo os dados e informações que compõem o nosso universo escolar.
             </p>
             
-            <!-- Nova seção de linha do tempo -->
+            <!-- Linha do tempo - História -->
             <div id="history" class="mb-16 scroll-mt-24">
                 <h3 class="text-2xl font-bold text-center mb-6 text-[#1E3A8A]">Nossa História em Dados</h3>
                 <div class="timeline">
@@ -697,7 +696,8 @@
                 const message = document.getElementById('message').value;
 
                 // Constrói o link mailto
-                const mailtoLink = `mailto:cebarrosbarreto@gmail.com?subject=Mensagem de ${name}&body=${encodeURIComponent(message)}%0A%0A%0A---%0A${encodeURIComponent('Email: ' + email)}`;
+                // Troque 'cebarrosbarreto@gmail.com' pelo seu e-mail de contato real
+                const mailtoLink = `mailto:contato@colegiobarrosbarreto.com?subject=Mensagem de ${name}&body=${encodeURIComponent(message)}%0A%0A%0A---%0A${encodeURIComponent('Email: ' + email)}`;
                 
                 // Abre o cliente de e-mail do usuário
                 window.location.href = mailtoLink;
@@ -707,5 +707,3 @@
     </script>
 </body>
 </html>
-
-
