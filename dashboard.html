@@ -3,112 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Inventário de TI - Lab Inf CEBB</title>
+    <title>Dashboard de Inventário de TI v2 - Lab Inf CEBB</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Cores baseadas na logo do CEBB */
+        :root {
+            --cebb-dark-blue: #0A2D5C;
+            --cebb-medium-blue: #1E4A8D;
+            --cebb-light-blue: #3B82F6;
+            --cebb-green: #22C55E;
+            --cebb-red: #EF4444;
+            --cebb-text: #E5E7EB;
+            --cebb-text-secondary: #9CA3AF;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #111827; /* bg-gray-900 */
-            color: #d1d5db; /* text-gray-300 */
+            background-color: var(--cebb-dark-blue);
+            color: var(--cebb-text);
         }
+        .bg-card { background-color: var(--cebb-medium-blue); }
+        .bg-header { background-color: var(--cebb-medium-blue); opacity: 0.9; }
+        
         .chart-container {
             position: relative;
             margin: auto;
             height: 300px;
             width: 100%;
         }
-        /* Custom scrollbar for table container */
-        .table-container::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+        /* Animação de entrada */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .table-container::-webkit-scrollbar-track {
-            background: #1f2937; /* bg-gray-800 */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
         }
-        .table-container::-webkit-scrollbar-thumb {
-            background: #4b5563; /* bg-gray-600 */
-            border-radius: 4px;
+        
+        /* Custom scrollbar */
+        .table-container::-webkit-scrollbar { width: 8px; height: 8px; }
+        .table-container::-webkit-scrollbar-track { background: var(--cebb-dark-blue); }
+        .table-container::-webkit-scrollbar-thumb { background: var(--cebb-light-blue); border-radius: 4px; }
+        .table-container::-webkit-scrollbar-thumb:hover { background: #60a5fa; }
+
+        /* Search input styling */
+        .search-input {
+            background-color: var(--cebb-dark-blue);
+            border: 1px solid var(--cebb-medium-blue);
+            color: var(--cebb-text);
         }
-        .table-container::-webkit-scrollbar-thumb:hover {
-            background: #6b7280; /* bg-gray-500 */
+        .search-input:focus {
+            outline: none;
+            border-color: var(--cebb-light-blue);
+            box-shadow: 0 0 0 2px var(--cebb-light-blue);
         }
     </style>
 </head>
 <body class="p-4 sm:p-6 md:p-8">
     <div class="max-w-7xl mx-auto">
         <!-- Header -->
-        <header class="mb-8">
+        <header class="mb-8 fade-in">
             <h1 class="text-3xl font-bold text-white text-center">Dashboard de Inventário de TI</h1>
-            <p class="text-center text-gray-400 mt-1">Laboratório de Informática - Colégio Estadual Barros Barreto (CEBB)</p>
+            <p class="text-center text-gray-300 mt-1">Laboratório de Informática - Colégio Estadual Barros Barreto (CEBB)</p>
         </header>
 
         <!-- KPIs Section -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
-                <h2 class="text-lg font-medium text-gray-400">Total de Máquinas</h2>
+            <div class="bg-card p-6 rounded-lg shadow-lg text-center fade-in" style="animation-delay: 100ms;">
+                <h2 class="text-lg font-medium text-gray-300">Total de Máquinas</h2>
                 <p class="text-4xl font-bold text-white mt-2">12</p>
-                <p class="text-sm text-gray-500">(Verificadas)</p>
+                <p class="text-sm text-gray-400">(Verificadas)</p>
             </div>
-            <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
-                <h2 class="text-lg font-medium text-gray-400">Máquinas Funcionais</h2>
-                <p class="text-4xl font-bold text-green-400 mt-2">10</p>
-                <p class="text-sm text-gray-500">(CPUs operacionais)</p>
+            <div class="bg-card p-6 rounded-lg shadow-lg text-center fade-in" style="animation-delay: 200ms;">
+                <h2 class="text-lg font-medium text-gray-300">Máquinas Funcionais</h2>
+                <p class="text-4xl font-bold text-[var(--cebb-green)] mt-2">10</p>
+                <p class="text-sm text-gray-400">(CPUs operacionais)</p>
             </div>
-            <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
-                <h2 class="text-lg font-medium text-gray-400">Máquinas com Problema</h2>
-                <p class="text-4xl font-bold text-red-400 mt-2">2</p>
-                <p class="text-sm text-gray-500">(A diagnosticar)</p>
+            <div class="bg-card p-6 rounded-lg shadow-lg text-center fade-in" style="animation-delay: 300ms;">
+                <h2 class="text-lg font-medium text-gray-300">Máquinas com Problema</h2>
+                <p class="text-4xl font-bold text-[var(--cebb-red)] mt-2">2</p>
+                <p class="text-sm text-gray-400">(A diagnosticar)</p>
             </div>
-            <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
-                <h2 class="text-lg font-medium text-gray-400">Total de Itens</h2>
+            <div class="bg-card p-6 rounded-lg shadow-lg text-center fade-in" style="animation-delay: 400ms;">
+                <h2 class="text-lg font-medium text-gray-300">Total de Itens</h2>
                 <p class="text-4xl font-bold text-white mt-2">29</p>
-                <p class="text-sm text-gray-500">(CPUs, Monitores, etc.)</p>
+                <p class="text-sm text-gray-400">(CPUs, Monitores, etc.)</p>
             </div>
         </div>
 
         <!-- Charts Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-            <!-- Chart 1: Equipamentos por Categoria -->
-            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 fade-in" style="animation-delay: 500ms;">
+            <div class="bg-card p-6 rounded-lg shadow-lg">
                 <h3 class="text-xl font-semibold text-white mb-4 text-center">Equipamentos por Categoria</h3>
-                <div class="chart-container">
-                    <canvas id="categoryChart"></canvas>
-                </div>
+                <div class="chart-container"><canvas id="categoryChart"></canvas></div>
             </div>
-            <!-- Chart 2: Status das Máquinas -->
-            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <div class="bg-card p-6 rounded-lg shadow-lg">
                 <h3 class="text-xl font-semibold text-white mb-4 text-center">Status das Máquinas</h3>
-                <div class="chart-container">
-                    <canvas id="statusChart"></canvas>
-                </div>
+                <div class="chart-container"><canvas id="statusChart"></canvas></div>
             </div>
-            <!-- Chart 3: CPUs por Marca -->
-            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <div class="bg-card p-6 rounded-lg shadow-lg">
                 <h3 class="text-xl font-semibold text-white mb-4 text-center">CPUs por Marca</h3>
-                <div class="chart-container">
-                    <canvas id="cpuChart"></canvas>
-                </div>
+                <div class="chart-container"><canvas id="cpuChart"></canvas></div>
             </div>
-            <!-- Chart 4: Monitores por Marca -->
-            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <div class="bg-card p-6 rounded-lg shadow-lg">
                 <h3 class="text-xl font-semibold text-white mb-4 text-center">Monitores por Marca</h3>
-                <div class="chart-container">
-                    <canvas id="monitorChart"></canvas>
-                </div>
+                <div class="chart-container"><canvas id="monitorChart"></canvas></div>
             </div>
         </div>
 
         <!-- Inventory Table Section -->
-        <div>
-            <h2 class="text-2xl font-bold text-white mb-4">Inventário Detalhado</h2>
-            <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+        <div class="fade-in" style="animation-delay: 600ms;">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold text-white">Inventário Detalhado</h2>
+                <div class="relative">
+                    <input type="text" id="searchInput" class="search-input w-64 pl-4 pr-10 py-2 rounded-full text-sm" placeholder="Pesquisar na tabela...">
+                    <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+            </div>
+            <div class="bg-card rounded-lg shadow-lg overflow-hidden">
                 <div class="overflow-x-auto table-container">
                     <table class="min-w-full text-sm text-left">
-                        <thead class="bg-gray-700 text-xs text-gray-300 uppercase">
+                        <thead class="bg-header text-xs text-gray-200 uppercase">
                             <tr>
                                 <th scope="col" class="px-6 py-3">Categoria</th>
                                 <th scope="col" class="px-6 py-3">Marca</th>
@@ -121,9 +142,9 @@
                                 <th scope="col" class="px-6 py-3">Nº Série / Patrimônio</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-700">
-                            <!-- CPU Daten -->
-                            <tr class="hover:bg-gray-700/50">
+                        <tbody id="inventoryTable" class="divide-y divide-[var(--cebb-dark-blue)]">
+                            <!-- Rows are identical to the previous version -->
+                            <tr class="hover:bg-[var(--cebb-dark-blue)]">
                                 <td class="px-6 py-4 font-medium">CPUs</td>
                                 <td class="px-6 py-4">Daten</td>
                                 <td class="px-6 py-4">-</td>
@@ -134,8 +155,7 @@
                                 <td class="px-6 py-4 text-center">4</td>
                                 <td class="px-6 py-4">N/A</td>
                             </tr>
-                            <!-- CPU C3Tech -->
-                            <tr class="hover:bg-gray-700/50">
+                            <tr class="hover:bg-[var(--cebb-dark-blue)]">
                                 <td class="px-6 py-4 font-medium">CPUs</td>
                                 <td class="px-6 py-4">C3Tech</td>
                                 <td class="px-6 py-4">-</td>
@@ -146,8 +166,7 @@
                                 <td class="px-6 py-4 text-center">6</td>
                                 <td class="px-6 py-4">N/A</td>
                             </tr>
-                            <!-- Monitores LG -->
-                             <tr class="hover:bg-gray-700/50">
+                            <tr class="hover:bg-[var(--cebb-dark-blue)]">
                                 <td class="px-6 py-4 font-medium">Monitores</td>
                                 <td class="px-6 py-4">LG</td>
                                 <td class="px-6 py-4">20MK400H-B</td>
@@ -160,8 +179,7 @@
 201AZRDSW534 (01.183.349)
 201AZCQSW371 (01.183.335)</td>
                             </tr>
-                            <!-- Monitor LG FLATRON -->
-                            <tr class="hover:bg-gray-700/50">
+                            <tr class="hover:bg-[var(--cebb-dark-blue)]">
                                 <td class="px-6 py-4 font-medium">Monitores</td>
                                 <td class="px-6 py-4">LG FLATRON</td>
                                 <td class="px-6 py-4">FLATRON W2043S-PF</td>
@@ -172,8 +190,7 @@
                                 <td class="px-6 py-4 text-center">1</td>
                                 <td class="px-6 py-4">910SYFRD4866</td>
                             </tr>
-                            <!-- Monitores BPC Corp -->
-                            <tr class="hover:bg-gray-700/50">
+                            <tr class="hover:bg-[var(--cebb-dark-blue)]">
                                 <td class="px-6 py-4 font-medium">Monitores</td>
                                 <td class="px-6 py-4">BPC Corp</td>
                                 <td class="px-6 py-4">BPC CORP 20WV 75...</td>
@@ -184,8 +201,7 @@
                                 <td class="px-6 py-4 text-center">6</td>
                                 <td class="px-6 py-4">N/A</td>
                             </tr>
-                             <!-- Monitor Brazil PC -->
-                            <tr class="hover:bg-gray-700/50">
+                            <tr class="hover:bg-[var(--cebb-dark-blue)]">
                                 <td class="px-6 py-4 font-medium">Monitores</td>
                                 <td class="px-6 py-4">Brazil PC</td>
                                 <td class="px-6 py-4">BPC-190HDMI-G</td>
@@ -196,8 +212,7 @@
                                 <td class="px-6 py-4 text-center">1</td>
                                 <td class="px-6 py-4">BPC190WHDMIVGABWC230238128</td>
                             </tr>
-                             <!-- Monitores VXpro -->
-                             <tr class="hover:bg-gray-700/50">
+                            <tr class="hover:bg-[var(--cebb-dark-blue)]">
                                 <td class="px-6 py-4 font-medium">Monitores</td>
                                 <td class="px-6 py-4">VXpro</td>
                                 <td class="px-6 py-4">VXP190V-HDMI</td>
@@ -208,8 +223,7 @@
                                 <td class="px-6 py-4 text-center">2</td>
                                 <td class="px-6 py-4">N/A</td>
                             </tr>
-                             <!-- Filtros de linha -->
-                            <tr class="hover:bg-gray-700/50">
+                            <tr class="hover:bg-[var(--cebb-dark-blue)]">
                                 <td class="px-6 py-4 font-medium">Filtros de linha</td>
                                 <td class="px-6 py-4">-</td>
                                 <td class="px-6 py-4">-</td>
@@ -229,12 +243,22 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const chartFontColor = '#d1d5db';
-            const gridColor = 'rgba(255, 255, 255, 0.1)';
+            // Colors from CSS variables
+            const colors = {
+                darkBlue: '#0A2D5C',
+                mediumBlue: '#1E4A8D',
+                lightBlue: '#3B82F6',
+                green: '#22C55E',
+                red: '#EF4444',
+                text: '#E5E7EB'
+            };
+            const gridColor = 'rgba(229, 231, 235, 0.1)';
 
             // Chart.js Global Defaults
-            Chart.defaults.color = chartFontColor;
+            Chart.defaults.color = colors.text;
             Chart.defaults.plugins.legend.position = 'bottom';
+            Chart.defaults.animation.duration = 1000;
+            Chart.defaults.animation.easing = 'easeInOutQuart';
 
             // 1. Category Chart (Doughnut)
             const categoryCtx = document.getElementById('categoryChart').getContext('2d');
@@ -245,23 +269,13 @@
                     datasets: [{
                         label: 'Unidades',
                         data: [10, 13, 6],
-                        backgroundColor: [
-                            'rgba(59, 130, 246, 0.7)',  // Blue
-                            'rgba(16, 185, 129, 0.7)', // Green
-                            'rgba(249, 115, 22, 0.7)', // Orange
-                        ],
-                        borderColor: [
-                            'rgba(59, 130, 246, 1)',
-                            'rgba(16, 185, 129, 1)',
-                            'rgba(249, 115, 22, 1)',
-                        ],
-                        borderWidth: 1
+                        backgroundColor: [colors.lightBlue, colors.green, 'rgba(249, 115, 22, 0.8)'],
+                        borderColor: colors.mediumBlue,
+                        borderWidth: 2,
+                        hoverOffset: 8
                     }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                }
+                options: { responsive: true, maintainAspectRatio: false }
             });
             
             // 2. Status Chart (Pie)
@@ -273,21 +287,13 @@
                     datasets: [{
                         label: 'Status das Máquinas',
                         data: [10, 2],
-                         backgroundColor: [
-                            'rgba(16, 185, 129, 0.7)', // Green
-                            'rgba(239, 68, 68, 0.7)',   // Red
-                        ],
-                        borderColor: [
-                            'rgba(16, 185, 129, 1)',
-                            'rgba(239, 68, 68, 1)',
-                        ],
-                        borderWidth: 1
+                        backgroundColor: [colors.green, colors.red],
+                        borderColor: colors.mediumBlue,
+                        borderWidth: 2,
+                        hoverOffset: 8
                     }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                }
+                options: { responsive: true, maintainAspectRatio: false }
             });
 
             // 3. CPU Chart (Bar)
@@ -299,39 +305,19 @@
                     datasets: [{
                         label: 'Nº de CPUs',
                         data: [4, 6],
-                        backgroundColor: [
-                             'rgba(59, 130, 246, 0.7)',
-                             'rgba(139, 92, 246, 0.7)', // Purple
-                        ],
-                        borderColor: [
-                            'rgba(59, 130, 246, 1)',
-                            'rgba(139, 92, 246, 1)',
-                        ],
-                        borderWidth: 1
+                        backgroundColor: [colors.lightBlue, '#8B5CF6'], // Purple
+                        borderColor: [colors.lightBlue, '#8B5CF6'],
+                        borderWidth: 1,
+                        borderRadius: 4
                     }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
+                    responsive: true, maintainAspectRatio: false,
                     scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                color: chartFontColor,
-                                stepSize: 1
-                            },
-                            grid: { color: gridColor }
-                        },
-                        x: {
-                            ticks: { color: chartFontColor },
-                            grid: { color: 'transparent' }
-                        }
+                        y: { beginAtZero: true, ticks: { color: colors.text, stepSize: 1 }, grid: { color: gridColor } },
+                        x: { ticks: { color: colors.text }, grid: { color: 'transparent' } }
                     },
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    }
+                    plugins: { legend: { display: false } }
                 }
             });
 
@@ -344,46 +330,39 @@
                     datasets: [{
                         label: 'Nº de Monitores',
                         data: [6, 3, 2, 1, 1],
-                        backgroundColor: [
-                            'rgba(16, 185, 129, 0.7)',
-                            'rgba(234, 179, 8, 0.7)', // Yellow
-                            'rgba(249, 115, 22, 0.7)',
-                            'rgba(219, 39, 119, 0.7)', // Pink
-                            'rgba(14, 165, 233, 0.7)', // Sky blue
-                        ],
-                         borderColor: [
-                            'rgba(16, 185, 129, 1)',
-                            'rgba(234, 179, 8, 1)',
-                            'rgba(249, 115, 22, 1)',
-                            'rgba(219, 39, 119, 1)',
-                            'rgba(14, 165, 233, 1)',
-                        ],
-                        borderWidth: 1
+                        backgroundColor: [colors.green, '#F59E0B', '#F97316', '#EC4899', '#38BDF8'],
+                        borderWidth: 0,
+                        borderRadius: 4
                     }]
                 },
                 options: {
-                    indexAxis: 'y',
-                    responsive: true,
-                    maintainAspectRatio: false,
+                    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
                     scales: {
-                         y: {
-                            beginAtZero: true,
-                            ticks: { color: chartFontColor },
-                            grid: { color: 'transparent' }
-                        },
-                        x: {
-                            ticks: { color: chartFontColor, stepSize: 1 },
-                            grid: { color: gridColor }
-                        }
+                        y: { ticks: { color: colors.text }, grid: { color: 'transparent' } },
+                        x: { ticks: { color: colors.text, stepSize: 1 }, grid: { color: gridColor } }
                     },
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    }
+                    plugins: { legend: { display: false } }
                 }
             });
 
+            // Table Search Functionality
+            const searchInput = document.getElementById('searchInput');
+            const tableBody = document.getElementById('inventoryTable');
+            const tableRows = tableBody.getElementsByTagName('tr');
+
+            searchInput.addEventListener('keyup', function() {
+                const searchTerm = searchInput.value.toLowerCase();
+                
+                for (let i = 0; i < tableRows.length; i++) {
+                    const row = tableRows[i];
+                    const rowText = row.textContent.toLowerCase();
+                    if (rowText.includes(searchTerm)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                }
+            });
         });
     </script>
 </body>
