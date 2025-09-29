@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Inventário de TI v2 - Lab Inf CEBB</title>
+    <title>Dashboard de Inventário de TI v3 - Lab Inf CEBB</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,21 +50,65 @@
         .table-container::-webkit-scrollbar-thumb { background: var(--cebb-light-blue); border-radius: 4px; }
         .table-container::-webkit-scrollbar-thumb:hover { background: #60a5fa; }
 
-        /* Search input styling */
-        .search-input {
+        /* Input styling */
+        .custom-input {
             background-color: var(--cebb-dark-blue);
             border: 1px solid var(--cebb-medium-blue);
             color: var(--cebb-text);
         }
-        .search-input:focus {
+        .custom-input:focus {
             outline: none;
             border-color: var(--cebb-light-blue);
             box-shadow: 0 0 0 2px var(--cebb-light-blue);
         }
+        .login-btn {
+            background-color: var(--cebb-light-blue);
+            transition: background-color 0.2s;
+        }
+        .login-btn:hover {
+            background-color: #60a5fa;
+        }
+        .login-btn:disabled {
+            background-color: var(--cebb-medium-blue);
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body class="p-4 sm:p-6 md:p-8">
-    <div class="max-w-7xl mx-auto">
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="min-h-screen flex items-center justify-center fixed inset-0 z-50 bg-[var(--cebb-dark-blue)]">
+        <div class="w-full max-w-md p-8 space-y-8 bg-card rounded-xl shadow-lg">
+            <div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-white">Acesso ao Dashboard</h2>
+                <p class="mt-2 text-center text-sm text-gray-300">
+                    Inventário de TI - CEBB
+                </p>
+            </div>
+            <form id="loginForm" class="mt-8 space-y-6">
+                <div class="rounded-md shadow-sm -space-y-px">
+                    <div>
+                        <label for="password" class="sr-only">Senha</label>
+                        <input id="password" name="password" type="password" required class="custom-input appearance-none rounded-md relative block w-full px-3 py-3 border placeholder-gray-500 text-white focus:z-10 sm:text-sm" placeholder="Senha">
+                    </div>
+                </div>
+                <div id="errorMessage" class="text-sm text-red-400 text-center font-medium h-5"></div>
+                <div>
+                    <button type="submit" id="loginButton" class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white login-btn focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-blue-500">
+                        Entrar
+                    </button>
+                </div>
+            </form>
+             <div id="lockoutMessage" class="hidden text-center text-sm text-gray-300">
+                <p class="font-bold text-red-400">Acesso bloqueado após 3 tentativas.</p>
+                <p class="mt-2">Por favor, entre em contato através do e-mail <a href="mailto:cebarrosbarreto@gmail.com" class="font-medium text-[var(--cebb-light-blue)] hover:underline">cebarrosbarreto@gmail.com</a> ou com a coordenação pedagógica.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Dashboard Content (Initially Hidden) -->
+    <div id="dashboard-content" class="max-w-7xl mx-auto hidden">
         <!-- Header -->
         <header class="mb-8 fade-in">
             <h1 class="text-3xl font-bold text-white text-center">Dashboard de Inventário de TI</h1>
@@ -117,10 +161,10 @@
 
         <!-- Inventory Table Section -->
         <div class="fade-in" style="animation-delay: 600ms;">
-            <div class="flex justify-between items-center mb-4">
+            <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-4">
                 <h2 class="text-2xl font-bold text-white">Inventário Detalhado</h2>
                 <div class="relative">
-                    <input type="text" id="searchInput" class="search-input w-64 pl-4 pr-10 py-2 rounded-full text-sm" placeholder="Pesquisar na tabela...">
+                    <input type="text" id="searchInput" class="custom-input w-64 pl-4 pr-10 py-2 rounded-full text-sm" placeholder="Pesquisar na tabela...">
                     <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
@@ -240,135 +284,195 @@
             </div>
         </div>
     </div>
-    
-    <footer class="bg-[#1E3A8A] text-white mt-16">
-        <div class="container mx-auto px-6 py-4 text-center">
-            <p>&copy; 2025 Colégio Estadual Barros Barreto. Todos os direitos reservados a Wilder Paz</p>
-        </div>
-    </footer>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Colors from CSS variables
-            const colors = {
-                darkBlue: '#0A2D5C',
-                mediumBlue: '#1E4A8D',
-                lightBlue: '#3B82F6',
-                green: '#22C55E',
-                red: '#EF4444',
-                text: '#E5E7EB'
-            };
-            const gridColor = 'rgba(229, 231, 235, 0.1)';
-
-            // Chart.js Global Defaults
-            Chart.defaults.color = colors.text;
-            Chart.defaults.plugins.legend.position = 'bottom';
-            Chart.defaults.animation.duration = 1000;
-            Chart.defaults.animation.easing = 'easeInOutQuart';
-
-            // 1. Category Chart (Doughnut)
-            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
-            new Chart(categoryCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['CPUs', 'Monitores', 'Filtros de linha'],
-                    datasets: [{
-                        label: 'Unidades',
-                        data: [10, 13, 6],
-                        backgroundColor: [colors.lightBlue, colors.green, 'rgba(249, 115, 22, 0.8)'],
-                        borderColor: colors.mediumBlue,
-                        borderWidth: 2,
-                        hoverOffset: 8
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
+            // --- LOGIN LOGIC ---
+            const loginScreen = document.getElementById('login-screen');
+            const dashboardContent = document.getElementById('dashboard-content');
+            const loginForm = document.getElementById('loginForm');
+            const passwordInput = document.getElementById('password');
+            const loginButton = document.getElementById('loginButton');
+            const errorMessage = document.getElementById('errorMessage');
+            const lockoutMessage = document.getElementById('lockoutMessage');
             
-            // 2. Status Chart (Pie)
-            const statusCtx = document.getElementById('statusChart').getContext('2d');
-            new Chart(statusCtx, {
-                type: 'pie',
-                data: {
-                    labels: ['Funcionais', 'Com Problema'],
-                    datasets: [{
-                        label: 'Status das Máquinas',
-                        data: [10, 2],
-                        backgroundColor: [colors.green, colors.red],
-                        borderColor: colors.mediumBlue,
-                        borderWidth: 2,
-                        hoverOffset: 8
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
+            // SHA-256 hash of the password "B@rrosBarret0"
+            const correctHash = '12b61595913e6871141706248671b9f6b328135a51a4f0275d8a9b4f9a5f4586';
+            let loginAttempts = 0;
 
-            // 3. CPU Chart (Bar)
-            const cpuCtx = document.getElementById('cpuChart').getContext('2d');
-            new Chart(cpuCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Daten', 'C3Tech'],
-                    datasets: [{
-                        label: 'Nº de CPUs',
-                        data: [4, 6],
-                        backgroundColor: [colors.lightBlue, '#8B5CF6'], // Purple
-                        borderColor: [colors.lightBlue, '#8B5CF6'],
-                        borderWidth: 1,
-                        borderRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    scales: {
-                        y: { beginAtZero: true, ticks: { color: colors.text, stepSize: 1 }, grid: { color: gridColor } },
-                        x: { ticks: { color: colors.text }, grid: { color: 'transparent' } }
-                    },
-                    plugins: { legend: { display: false } }
-                }
-            });
+            // Helper function to hash input using Web Crypto API
+            async function sha256(message) {
+                const msgBuffer = new TextEncoder().encode(message);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+                return hashHex;
+            }
 
-            // 4. Monitor Chart (Bar)
-            const monitorCtx = document.getElementById('monitorChart').getContext('2d');
-            new Chart(monitorCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['BPC Corp', 'LG', 'VXpro', 'Brazil PC', 'LG FLATRON'],
-                    datasets: [{
-                        label: 'Nº de Monitores',
-                        data: [6, 3, 2, 1, 1],
-                        backgroundColor: [colors.green, '#F59E0B', '#F97316', '#EC4899', '#38BDF8'],
-                        borderWidth: 0,
-                        borderRadius: 4
-                    }]
-                },
-                options: {
-                    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-                    scales: {
-                        y: { ticks: { color: colors.text }, grid: { color: 'transparent' } },
-                        x: { ticks: { color: colors.text, stepSize: 1 }, grid: { color: gridColor } }
-                    },
-                    plugins: { legend: { display: false } }
-                }
-            });
+            loginForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+                const enteredPassword = passwordInput.value;
+                const enteredHash = await sha256(enteredPassword);
 
-            // Table Search Functionality
-            const searchInput = document.getElementById('searchInput');
-            const tableBody = document.getElementById('inventoryTable');
-            const tableRows = tableBody.getElementsByTagName('tr');
-
-            searchInput.addEventListener('keyup', function() {
-                const searchTerm = searchInput.value.toLowerCase();
-                
-                for (let i = 0; i < tableRows.length; i++) {
-                    const row = tableRows[i];
-                    const rowText = row.textContent.toLowerCase();
-                    if (rowText.includes(searchTerm)) {
-                        row.style.display = '';
+                if (enteredHash === correctHash) {
+                    // Success
+                    loginScreen.classList.add('fade-out');
+                    setTimeout(() => {
+                      loginScreen.style.display = 'none';
+                      dashboardContent.classList.remove('hidden');
+                      initializeDashboard();
+                    }, 500); // Match fade-out duration
+                } else {
+                    // Failure
+                    loginAttempts++;
+                    passwordInput.value = '';
+                    if (loginAttempts >= 3) {
+                        loginForm.style.display = 'none';
+                        lockoutMessage.classList.remove('hidden');
                     } else {
-                        row.style.display = 'none';
+                        errorMessage.textContent = `Senha incorreta. Tentativa ${loginAttempts} de 3.`;
+                        // Shake animation for feedback
+                        loginForm.parentElement.classList.add('animate-shake');
+                        setTimeout(() => loginForm.parentElement.classList.remove('animate-shake'), 600);
                     }
                 }
             });
+            
+            // Add custom animation classes for login feedback
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes shake { 
+                    10%, 90% { transform: translate3d(-1px, 0, 0); }
+                    20%, 80% { transform: translate3d(2px, 0, 0); }
+                    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+                    40%, 60% { transform: translate3d(4px, 0, 0); }
+                }
+                .animate-shake { animation: shake 0.6s cubic-bezier(.36,.07,.19,.97) both; }
+                .fade-out { animation: fadeOut 0.5s ease-out forwards; }
+                @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+            `;
+            document.head.appendChild(style);
+
+
+            // --- DASHBOARD AND CHARTS LOGIC ---
+            function initializeDashboard() {
+                // Colors from CSS variables
+                const colors = {
+                    darkBlue: '#0A2D5C',
+                    mediumBlue: '#1E4A8D',
+                    lightBlue: '#3B82F6',
+                    green: '#22C55E',
+                    red: '#EF4444',
+                    text: '#E5E7EB'
+                };
+                const gridColor = 'rgba(229, 231, 235, 0.1)';
+
+                // Chart.js Global Defaults
+                Chart.defaults.color = colors.text;
+                Chart.defaults.plugins.legend.position = 'bottom';
+                Chart.defaults.animation.duration = 1000;
+                Chart.defaults.animation.easing = 'easeInOutQuart';
+
+                // 1. Category Chart (Doughnut)
+                new Chart(document.getElementById('categoryChart').getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['CPUs', 'Monitores', 'Filtros de linha'],
+                        datasets: [{
+                            label: 'Unidades',
+                            data: [10, 13, 6],
+                            backgroundColor: [colors.lightBlue, colors.green, 'rgba(249, 115, 22, 0.8)'],
+                            borderColor: colors.mediumBlue,
+                            borderWidth: 2,
+                            hoverOffset: 8
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false }
+                });
+                
+                // 2. Status Chart (Pie)
+                new Chart(document.getElementById('statusChart').getContext('2d'), {
+                    type: 'pie',
+                    data: {
+                        labels: ['Funcionais', 'Com Problema'],
+                        datasets: [{
+                            label: 'Status das Máquinas',
+                            data: [10, 2],
+                            backgroundColor: [colors.green, colors.red],
+                            borderColor: colors.mediumBlue,
+                            borderWidth: 2,
+                            hoverOffset: 8
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false }
+                });
+
+                // 3. CPU Chart (Bar)
+                new Chart(document.getElementById('cpuChart').getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['Daten', 'C3Tech'],
+                        datasets: [{
+                            label: 'Nº de CPUs',
+                            data: [4, 6],
+                            backgroundColor: [colors.lightBlue, '#8B5CF6'], // Purple
+                            borderColor: [colors.lightBlue, '#8B5CF6'],
+                            borderWidth: 1,
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        scales: {
+                            y: { beginAtZero: true, ticks: { color: colors.text, stepSize: 1 }, grid: { color: gridColor } },
+                            x: { ticks: { color: colors.text }, grid: { color: 'transparent' } }
+                        },
+                        plugins: { legend: { display: false } }
+                    }
+                });
+
+                // 4. Monitor Chart (Bar)
+                new Chart(document.getElementById('monitorChart').getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['BPC Corp', 'LG', 'VXpro', 'Brazil PC', 'LG FLATRON'],
+                        datasets: [{
+                            label: 'Nº de Monitores',
+                            data: [6, 3, 2, 1, 1],
+                            backgroundColor: [colors.green, '#F59E0B', '#F97316', '#EC4899', '#38BDF8'],
+                            borderWidth: 0,
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                        scales: {
+                            y: { ticks: { color: colors.text }, grid: { color: 'transparent' } },
+                            x: { ticks: { color: colors.text, stepSize: 1 }, grid: { color: gridColor } }
+                        },
+                        plugins: { legend: { display: false } }
+                    }
+                });
+
+                // Table Search Functionality
+                const searchInput = document.getElementById('searchInput');
+                const tableBody = document.getElementById('inventoryTable');
+                const tableRows = tableBody.getElementsByTagName('tr');
+
+                searchInput.addEventListener('keyup', function() {
+                    const searchTerm = searchInput.value.toLowerCase();
+                    
+                    for (let i = 0; i < tableRows.length; i++) {
+                        const row = tableRows[i];
+                        const rowText = row.textContent.toLowerCase();
+                        if (rowText.includes(searchTerm)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    }
+                });
+            }
         });
     </script>
 </body>
