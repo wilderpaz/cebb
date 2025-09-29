@@ -86,11 +86,19 @@
                 </p>
             </div>
             <form id="loginForm" class="mt-8 space-y-6">
-                <div class="rounded-md shadow-sm -space-y-px">
-                    <div>
-                        <label for="password" class="sr-only">Senha</label>
-                        <input id="password" name="password" type="password" required class="custom-input appearance-none rounded-md relative block w-full px-3 py-3 border placeholder-gray-500 text-white focus:z-10 sm:text-sm" placeholder="Senha">
-                    </div>
+                <div class="relative">
+                    <label for="password" class="sr-only">Senha</label>
+                    <input id="password" name="password" type="password" required class="custom-input appearance-none rounded-md relative block w-full pl-3 pr-10 py-3 border placeholder-gray-500 text-white focus:z-10 sm:text-sm" placeholder="Senha">
+                    <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-400 hover:text-white">
+                        <svg id="eye-open" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.02 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                        </svg>
+                         <svg id="eye-closed" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074L3.707 2.293zM10 12a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                            <path d="M2 10s3.939 7 8 7 8-7 8-7l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074L3.707 2.293A1 1 0 002.293 3.707L3.5 4.914 2 6.414V10z" />
+                        </svg>
+                    </button>
                 </div>
                 <div id="errorMessage" class="text-sm text-red-400 text-center font-medium h-5"></div>
                 <div>
@@ -292,13 +300,23 @@
             const dashboardContent = document.getElementById('dashboard-content');
             const loginForm = document.getElementById('loginForm');
             const passwordInput = document.getElementById('password');
-            const loginButton = document.getElementById('loginButton');
+            const togglePasswordButton = document.getElementById('togglePassword');
+            const eyeOpenIcon = document.getElementById('eye-open');
+            const eyeClosedIcon = document.getElementById('eye-closed');
             const errorMessage = document.getElementById('errorMessage');
             const lockoutMessage = document.getElementById('lockoutMessage');
             
             // SHA-256 hash of the password "B@rrosBarret0"
             const correctHash = '12b61595913e6871141706248671b9f6b328135a51a4f0275d8a9b4f9a5f4586';
             let loginAttempts = 0;
+
+            // Password visibility toggle
+            togglePasswordButton.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                eyeOpenIcon.classList.toggle('hidden');
+                eyeClosedIcon.classList.toggle('hidden');
+            });
 
             // Helper function to hash input using Web Crypto API
             async function sha256(message) {
