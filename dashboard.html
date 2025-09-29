@@ -9,6 +9,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Carrega o arquivo de configuração que contém a senha -->
+    <script src="config.js" defer></script>
+
     <style>
         /* Cores baseadas na logo do CEBB */
         :root {
@@ -306,8 +310,6 @@
             const errorMessage = document.getElementById('errorMessage');
             const lockoutMessage = document.getElementById('lockoutMessage');
             
-            // SHA-256 hash of the password "cebb2025"
-            const correctHash = '954d55883394511a56f5908316886e42b322a45b741f237f098522e840618991';
             let loginAttempts = 0;
 
             // Password visibility toggle
@@ -318,21 +320,20 @@
                 eyeClosedIcon.classList.toggle('hidden');
             });
 
-            // Helper function to hash input using Web Crypto API
-            async function sha256(message) {
-                const msgBuffer = new TextEncoder().encode(message);
-                const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-                const hashArray = Array.from(new Uint8Array(hashBuffer));
-                const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-                return hashHex;
-            }
-
-            loginForm.addEventListener('submit', async function(event) {
+            loginForm.addEventListener('submit', function(event) {
                 event.preventDefault();
                 const enteredPassword = passwordInput.value;
-                const enteredHash = await sha256(enteredPassword);
 
-                if (enteredHash === correctHash) {
+                // Verifica se a variável AUTH_TOKEN do config.js foi carregada
+                if (typeof AUTH_TOKEN === 'undefined') {
+                    errorMessage.textContent = 'Erro de configuração. Verifique o arquivo config.js';
+                    return;
+                }
+                
+                // Decodifica a senha do config.js (que está em Base64) e a compara.
+                const correctPassword = atob(AUTH_TOKEN);
+
+                if (enteredPassword === correctPassword) {
                     // Success
                     loginScreen.classList.add('fade-out');
                     setTimeout(() => {
