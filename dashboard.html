@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Inventário de TI v3 - Lab Inf CEBB</title>
+    <title>Dashboard de Inventário de TI - Lab Inf CEBB</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Carrega o arquivo de configuração que contém a senha -->
-    <script src="config.js" defer></script>
-
     <style>
         /* Cores baseadas na logo do CEBB */
         :root {
@@ -131,22 +128,22 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div class="bg-card p-6 rounded-lg shadow-lg text-center fade-in" style="animation-delay: 100ms;">
                 <h2 class="text-lg font-medium text-gray-300">Total de Máquinas</h2>
-                <p class="text-4xl font-bold text-white mt-2">12</p>
-                <p class="text-sm text-gray-400">(Verificadas)</p>
+                <p class="text-4xl font-bold text-white mt-2">11</p>
+                <p class="text-sm text-gray-400">(CPUs Verificadas)</p>
             </div>
             <div class="bg-card p-6 rounded-lg shadow-lg text-center fade-in" style="animation-delay: 200ms;">
                 <h2 class="text-lg font-medium text-gray-300">Máquinas Funcionais</h2>
-                <p class="text-4xl font-bold text-[var(--cebb-green)] mt-2">10</p>
-                <p class="text-sm text-gray-400">(CPUs operacionais)</p>
+                <p class="text-4xl font-bold text-[var(--cebb-green)] mt-2">9</p>
+                <p class="text-sm text-gray-400">(Status atual)</p>
             </div>
             <div class="bg-card p-6 rounded-lg shadow-lg text-center fade-in" style="animation-delay: 300ms;">
                 <h2 class="text-lg font-medium text-gray-300">Máquinas com Problema</h2>
                 <p class="text-4xl font-bold text-[var(--cebb-red)] mt-2">2</p>
-                <p class="text-sm text-gray-400">(A diagnosticar)</p>
+                <p class="text-sm text-gray-400">(Aguardando diagnóstico)</p>
             </div>
             <div class="bg-card p-6 rounded-lg shadow-lg text-center fade-in" style="animation-delay: 400ms;">
                 <h2 class="text-lg font-medium text-gray-300">Total de Itens</h2>
-                <p class="text-4xl font-bold text-white mt-2">29</p>
+                <p class="text-4xl font-bold text-white mt-2">30</p>
                 <p class="text-sm text-gray-400">(CPUs, Monitores, etc.)</p>
             </div>
         </div>
@@ -193,13 +190,13 @@
                                 <th scope="col" class="px-6 py-3">Processador</th>
                                 <th scope="col" class="px-6 py-3">RAM</th>
                                 <th scope="col" class="px-6 py-3">Armazenamento</th>
+                                <th scope="col" class="px-6 py-3">Placa de Vídeo</th>
                                 <th scope="col" class="px-6 py-3">SO</th>
-                                <th scope="col" class="px-6 py-3">Unidades</th>
+                                <th scope="col" class="px-6 py-3">Und</th>
                                 <th scope="col" class="px-6 py-3">Nº Série / Patrimônio</th>
                             </tr>
                         </thead>
                         <tbody id="inventoryTable" class="divide-y divide-[var(--cebb-dark-blue)]">
-                            <!-- Rows are identical to the previous version -->
                             <tr class="hover:bg-[var(--cebb-dark-blue)]">
                                 <td class="px-6 py-4 font-medium">CPUs</td>
                                 <td class="px-6 py-4">Daten</td>
@@ -207,6 +204,7 @@
                                 <td class="px-6 py-4">AMD Athlon Gold PRO 3150G</td>
                                 <td class="px-6 py-4">8.00 GB</td>
                                 <td class="px-6 py-4">238 GB SSD</td>
+                                <td class="px-6 py-4">AMD Radeon Vega 3</td>
                                 <td class="px-6 py-4">Windows 10 Pro Education</td>
                                 <td class="px-6 py-4 text-center">4</td>
                                 <td class="px-6 py-4">N/A</td>
@@ -215,17 +213,43 @@
                                 <td class="px-6 py-4 font-medium">CPUs</td>
                                 <td class="px-6 py-4">C3Tech</td>
                                 <td class="px-6 py-4">-</td>
+                                <td class="px-6 py-4">Intel Core i5-3470</td>
+                                <td class="px-6 py-4">8.00 GB</td>
+                                <td class="px-6 py-4">224 GB SSD</td>
+                                <td class="px-6 py-4">Intel HD Graphics</td>
+                                <td class="px-6 py-4">Windows 10 Pro Education</td>
+                                <td class="px-6 py-4 text-center">5</td>
+                                <td class="px-6 py-4">N/A</td>
+                            </tr>
+                            <tr class="hover:bg-[var(--cebb-dark-blue)]">
+                                <td class="px-6 py-4 font-medium">CPUs</td>
+                                <td class="px-6 py-4">C3Tech</td>
+                                <td class="px-6 py-4">-</td>
                                 <td class="px-6 py-4">Intel Core i3-2100</td>
                                 <td class="px-6 py-4">4.00 GB</td>
-                                <td class="px-6 py-4">HD a ser especificado</td>
+                                <td class="px-6 py-4">224 GB SSD</td>
+                                <td class="px-6 py-4">Intel HD Graphics</td>
                                 <td class="px-6 py-4">Windows 10 Pro Education</td>
-                                <td class="px-6 py-4 text-center">6</td>
+                                <td class="px-6 py-4 text-center">1</td>
+                                <td class="px-6 py-4">N/A</td>
+                            </tr>
+                            <tr class="hover:bg-[var(--cebb-dark-blue)]">
+                                <td class="px-6 py-4 font-medium">CPUs</td>
+                                <td class="px-6 py-4">C3Tech</td>
+                                <td class="px-6 py-4">-</td>
+                                <td class="px-6 py-4">Intel Core i3-2120</td>
+                                <td class="px-6 py-4">4.00 GB</td>
+                                <td class="px-6 py-4">224 GB SSD</td>
+                                <td class="px-6 py-4">Intel HD Graphics</td>
+                                <td class="px-6 py-4">Windows 10 Pro Education</td>
+                                <td class="px-6 py-4 text-center">1</td>
                                 <td class="px-6 py-4">N/A</td>
                             </tr>
                             <tr class="hover:bg-[var(--cebb-dark-blue)]">
                                 <td class="px-6 py-4 font-medium">Monitores</td>
                                 <td class="px-6 py-4">LG</td>
                                 <td class="px-6 py-4">20MK400H-B</td>
+                                <td class="px-6 py-4">N/A</td>
                                 <td class="px-6 py-4">N/A</td>
                                 <td class="px-6 py-4">N/A</td>
                                 <td class="px-6 py-4">N/A</td>
@@ -243,6 +267,7 @@
                                 <td class="px-6 py-4">N/A</td>
                                 <td class="px-6 py-4">N/A</td>
                                 <td class="px-6 py-4">N/A</td>
+                                <td class="px-6 py-4">N/A</td>
                                 <td class="px-6 py-4 text-center">1</td>
                                 <td class="px-6 py-4">910SYFRD4866</td>
                             </tr>
@@ -250,6 +275,7 @@
                                 <td class="px-6 py-4 font-medium">Monitores</td>
                                 <td class="px-6 py-4">BPC Corp</td>
                                 <td class="px-6 py-4">BPC CORP 20WV 75...</td>
+                                <td class="px-6 py-4">N/A</td>
                                 <td class="px-6 py-4">N/A</td>
                                 <td class="px-6 py-4">N/A</td>
                                 <td class="px-6 py-4">N/A</td>
@@ -265,6 +291,7 @@
                                 <td class="px-6 py-4">N/A</td>
                                 <td class="px-6 py-4">N/A</td>
                                 <td class="px-6 py-4">N/A</td>
+                                <td class="px-6 py-4">N/A</td>
                                 <td class="px-6 py-4 text-center">1</td>
                                 <td class="px-6 py-4">BPC190WHDMIVGABWC230238128</td>
                             </tr>
@@ -276,6 +303,7 @@
                                 <td class="px-6 py-4">N/A</td>
                                 <td class="px-6 py-4">N/A</td>
                                 <td class="px-6 py-4">N/A</td>
+                                <td class="px-6 py-4">N/A</td>
                                 <td class="px-6 py-4 text-center">2</td>
                                 <td class="px-6 py-4">N/A</td>
                             </tr>
@@ -283,6 +311,7 @@
                                 <td class="px-6 py-4 font-medium">Filtros de linha</td>
                                 <td class="px-6 py-4">-</td>
                                 <td class="px-6 py-4">-</td>
+                                <td class="px-6 py-4">N/A</td>
                                 <td class="px-6 py-4">N/A</td>
                                 <td class="px-6 py-4">N/A</td>
                                 <td class="px-6 py-4">N/A</td>
@@ -312,7 +341,8 @@
             
             let loginAttempts = 0;
 
-            // Password visibility toggle
+            const AUTH_TOKEN = 'Y2ViYjIwMjU=';
+
             togglePasswordButton.addEventListener('click', function() {
                 const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
                 passwordInput.setAttribute('type', type);
@@ -323,26 +353,16 @@
             loginForm.addEventListener('submit', function(event) {
                 event.preventDefault();
                 const enteredPassword = passwordInput.value;
-
-                // Verifica se a variável AUTH_TOKEN do config.js foi carregada
-                if (typeof AUTH_TOKEN === 'Y2ViYjIwMjU=') {
-                    errorMessage.textContent = 'Erro de configuração. Verifique o arquivo config.js';
-                    return;
-                }
-                
-                // Decodifica a senha do config.js (que está em Base64) e a compara.
                 const correctPassword = atob(AUTH_TOKEN);
 
                 if (enteredPassword === correctPassword) {
-                    // Success
                     loginScreen.classList.add('fade-out');
                     setTimeout(() => {
                       loginScreen.style.display = 'none';
                       dashboardContent.classList.remove('hidden');
                       initializeDashboard();
-                    }, 500); // Match fade-out duration
+                    }, 500);
                 } else {
-                    // Failure
                     loginAttempts++;
                     passwordInput.value = '';
                     if (loginAttempts >= 3) {
@@ -350,14 +370,12 @@
                         lockoutMessage.classList.remove('hidden');
                     } else {
                         errorMessage.textContent = `Senha incorreta. Tentativa ${loginAttempts} de 3.`;
-                        // Shake animation for feedback
                         loginForm.parentElement.classList.add('animate-shake');
                         setTimeout(() => loginForm.parentElement.classList.remove('animate-shake'), 600);
                     }
                 }
             });
             
-            // Add custom animation classes for login feedback
             const style = document.createElement('style');
             style.innerHTML = `
                 @keyframes shake { 
@@ -375,7 +393,6 @@
 
             // --- DASHBOARD AND CHARTS LOGIC ---
             function initializeDashboard() {
-                // Colors from CSS variables
                 const colors = {
                     darkBlue: '#0A2D5C',
                     mediumBlue: '#1E4A8D',
@@ -386,20 +403,18 @@
                 };
                 const gridColor = 'rgba(229, 231, 235, 0.1)';
 
-                // Chart.js Global Defaults
                 Chart.defaults.color = colors.text;
                 Chart.defaults.plugins.legend.position = 'bottom';
                 Chart.defaults.animation.duration = 1000;
                 Chart.defaults.animation.easing = 'easeInOutQuart';
 
-                // 1. Category Chart (Doughnut)
                 new Chart(document.getElementById('categoryChart').getContext('2d'), {
                     type: 'doughnut',
                     data: {
                         labels: ['CPUs', 'Monitores', 'Filtros de linha'],
                         datasets: [{
                             label: 'Unidades',
-                            data: [10, 13, 6],
+                            data: [11, 13, 6],
                             backgroundColor: [colors.lightBlue, colors.green, 'rgba(249, 115, 22, 0.8)'],
                             borderColor: colors.mediumBlue,
                             borderWidth: 2,
@@ -409,14 +424,13 @@
                     options: { responsive: true, maintainAspectRatio: false }
                 });
                 
-                // 2. Status Chart (Pie)
                 new Chart(document.getElementById('statusChart').getContext('2d'), {
                     type: 'pie',
                     data: {
                         labels: ['Funcionais', 'Com Problema'],
                         datasets: [{
                             label: 'Status das Máquinas',
-                            data: [10, 2],
+                            data: [9, 2],
                             backgroundColor: [colors.green, colors.red],
                             borderColor: colors.mediumBlue,
                             borderWidth: 2,
@@ -426,15 +440,14 @@
                     options: { responsive: true, maintainAspectRatio: false }
                 });
 
-                // 3. CPU Chart (Bar)
                 new Chart(document.getElementById('cpuChart').getContext('2d'), {
                     type: 'bar',
                     data: {
                         labels: ['Daten', 'C3Tech'],
                         datasets: [{
                             label: 'Nº de CPUs',
-                            data: [4, 6],
-                            backgroundColor: [colors.lightBlue, '#8B5CF6'], // Purple
+                            data: [4, 7],
+                            backgroundColor: [colors.lightBlue, '#8B5CF6'],
                             borderColor: [colors.lightBlue, '#8B5CF6'],
                             borderWidth: 1,
                             borderRadius: 4
@@ -450,7 +463,6 @@
                     }
                 });
 
-                // 4. Monitor Chart (Bar)
                 new Chart(document.getElementById('monitorChart').getContext('2d'), {
                     type: 'bar',
                     data: {
@@ -496,4 +508,3 @@
     </script>
 </body>
 </html>
-
